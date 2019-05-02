@@ -1,5 +1,13 @@
-#! /bin/bash
+#! /bin/ksh -vx
 
-cd /home/shreeyansh
-sed -i '/ shreeyansh@server1$/d' ~/.ssh/authorized_keys
-passwd -l shreeyansh
+while read host user
+do
+
+ssh -nq $host -l $user
+
+cd /home/$user
+sed -i '/ $user@$host$/d' ~/.ssh/authorized_keys
+passwd -l $user
+
+
+done<config.cfg
